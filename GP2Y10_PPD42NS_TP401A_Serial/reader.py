@@ -36,13 +36,12 @@ import datetime
 while(True):
 	line = s.readline().strip()
 	now = datetime.datetime.utcnow()
-	print(line)
 
 	if(line.startswith('#')):
+		print(line)
 		continue
 
 	gp,tp,pp = line.split(',')
-	print(gp,tp,pp)
 	gp,tp,pp = map(float, (gp,tp,pp))
 
 	gp_voltage = gp*analog_voltage;	
