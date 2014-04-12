@@ -29,7 +29,7 @@ print(feed)
 
 import serial
 
-s = serial.Serial(device, 115200)
+s = serial.Serial(serial_device, 115200)
 print(s)
 
 import datetime
