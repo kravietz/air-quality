@@ -17,6 +17,7 @@ api_key = config.get('xively', 'api_key')
 feed_id = config.getint('xively', 'feed_id')
 
 analog_voltage = config.getfloat('arduino', 'analog_voltage')
+serial_device = config.get('arduino', 'device')
 
 print(api_key, feed_id, analog_voltage)
 
@@ -28,7 +29,7 @@ print(feed)
 
 import serial
 
-s = serial.Serial('/dev/ttyACM0', 115200)
+s = serial.Serial(device, 115200)
 print(s)
 
 import datetime
