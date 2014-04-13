@@ -33,6 +33,7 @@ s = serial.Serial(serial_device, 115200)
 print(s)
 
 import datetime
+import requests
 
 while(True):
 	line = s.readline().strip()
