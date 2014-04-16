@@ -39,6 +39,7 @@ q = []
 
 import csv
 import time
+<<<<<<< HEAD
 import os
 
 fout = open('{0}.csv'.format(time.time()), 'wb')
@@ -78,7 +79,6 @@ while(True):
 
         fout.flush()
         os.fsync(fout.fileno())
-
 
 	try:
             for n,g,p,t in q:
