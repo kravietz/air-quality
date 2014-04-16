@@ -29,10 +29,25 @@ print(feed)
 
 import serial
 
-s = serial.Serial(device, 115200)
+s = serial.Serial(serial_device, 115200)
 print(s)
 
 import datetime
+import requests
+
+q = []
+
+import csv
+import time
+import os
+
+fout = open('{0}.csv'.format(time.time()), 'wb')
+cw = csv.writer(fout)
+header = ['Time', 'GP2Y10', 'PPD42NS', 'TP401A']
+try:
+    cw.writeheader(header)
+except AttributeError:
+    cw.writerow(header)
 
 while(True):
 	line = s.readline().strip()
@@ -52,19 +67,29 @@ while(True):
 	pp_tsp = (1.1*pow(pp, 3) - 3.8*pow(pp, 2) + (520*pp) + 0.62)*0.033
 
 
-	print("Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7}".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, 
+	print("{8} Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7}".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, 
 													pp, pp_tsp,
-													tp
+													tp,
+                                                                                                        now
 													))
+        # add current results to queue
+        q.append((now, gp, pp, tp))
+        cw.writerow([now, gp, pp, tp])
 
-	feed.datastreams = [
-		xively.Datastream(id='GP2Y10_dust',  current_value=gp, at=now),
-		xively.Datastream(id='PPD42NS_dust', current_value=pp, at=now),
-		xively.Datastream(id='TP401A_gas',   current_value=tp, at=now),
-	]
+        fout.flush()
+        os.fsync(fout.fileno())
+
+
 	try:
-		feed.update()
-	except requests.exceptions.HTTPError:
-		pass
+            for n,g,p,t in q:
+	        feed.datastreams = [
+	            xively.Datastream(id='GP2Y10_dust',  current_value=g, at=n),
+	            xively.Datastream(id='PPD42NS_dust', current_value=p, at=n),
+	            xively.Datastream(id='TP401A_gas',   current_value=t, at=n),
+	        ]
+	        feed.update()
+            q = []
+	except (requests.exceptions.HTTPError, requests.exceptions.ConnectionError) as e:
+            print e
 
 
