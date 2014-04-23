@@ -19,18 +19,18 @@ feed_id = config.getint('xively', 'feed_id')
 analog_voltage = config.getfloat('arduino', 'analog_voltage')
 serial_device = config.get('arduino', 'device')
 
-print(api_key, feed_id, analog_voltage)
+print api_key, feed_id, analog_voltage
 
 import xively
 
 api = xively.XivelyAPIClient(api_key)
 feed = api.feeds.get(feed_id)
-print(feed)
+print feed
 
 import serial
 
 s = serial.Serial(serial_device, 115200)
-print(s)
+print s
 
 import datetime
 import requests
@@ -54,7 +54,7 @@ while(True):
 	now = datetime.datetime.utcnow()
 
 	if(line.startswith('#')):
-		print(line)
+		print line
 		continue
 
 	gp,tp,pp = line.split(',')
@@ -67,11 +67,11 @@ while(True):
 	pp_tsp = (1.1*pow(pp, 3) - 3.8*pow(pp, 2) + (520*pp) + 0.62)*0.033
 
 
-	print("{8} Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7}".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, 
+	print "{8} Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7}".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, 
 													pp, pp_tsp,
 													tp,
                                                                                                         now
-													))
+													)
         # add current results to queue
         q.append((now, gp, pp, tp))
         cw.writerow([now, gp, pp, tp])
