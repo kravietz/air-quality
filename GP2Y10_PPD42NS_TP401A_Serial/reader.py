@@ -39,7 +39,6 @@ q = []
 
 import csv
 import time
-<<<<<<< HEAD
 import os
 
 fout = open('{0}.csv'.format(time.time()), 'wb')
