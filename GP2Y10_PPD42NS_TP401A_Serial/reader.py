@@ -57,8 +57,12 @@ while(True):
 		print line
 		continue
 
-	gp,tp,pp = line.split(',')
-	gp,tp,pp = map(float, (gp,tp,pp))
+	try:
+		gp,tp,pp = line.split(',')
+		gp,tp,pp = map(float, (gp,tp,pp))
+	except ValueError:
+		print "Invalid line", line
+		continue
 
 	gp_voltage = gp*analog_voltage;	
 	gp_tsp = gp_voltage*200
