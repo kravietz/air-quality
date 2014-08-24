@@ -27,7 +27,7 @@ unsigned long i = 0; // number of samples
 String out = "";
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   
   pinMode(GP2ReadPin, INPUT);
   pinMode(GP2LedPin, OUTPUT);
