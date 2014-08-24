@@ -12,7 +12,7 @@ Live data feeds from prototype sensors:
 Arduino Uno reading three sensors through Grove Sensor Shield:
 
 * GP2Y10 - dust sensor; Arudino outputs analog port values (from 0-1024), proportional to sensor's output voltage, which are in turn proportional to particulates concentration; basically, **the less the better**, but this sensor has a non-zero out even at no dust, so expect some positive baseline output at all time;
-* PPD42NS - dust sensor; Arduino outputs percentage of low signal in sampling period (30 seconds) which is a non-linear function of dust concentration; again, **the less the better*, and zero dust means zero percentage;
+* PPD42NS - dust sensor; Arduino outputs percentage of low signal in sampling period (30 seconds) which is a non-linear function of dust concentration; again, **the less the better**, and zero dust means zero percentage;
 * TP401A - hazardous gases sensor; Arduino outputs analog port values (0-1024), which are proportional to sensor's resistance, which is inversely proportional to hazardous gases concentration; again, **the less the better**, but as this sensor is basically a resistor, expect some output all the time even when there's no gases;
  
 
