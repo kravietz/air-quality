@@ -2,8 +2,15 @@
 References:
 http://www.seeedstudio.com/wiki/images/e/eb/TP-401A_Indoor_Air_quality_gas_sensor.pdf
 http://www.sparkfun.com/datasheets/Sensors/gp2y1010au_e.pdf
-http://www.sca-shinyei.com/pdf/PPD42NS.pdf  
+http://www.sca-shinyei.com/pdf/PPD42NS.pdf 
+https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf
 */
+
+#include "DHT.h"
+
+#define DHTPIN A3        // A3
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
 
 #define GP2ReadPin A0    // A0
 #define GP2LedPin 2      // D2
@@ -36,9 +43,11 @@ void setup() {
   
   pinMode(PPDpin, INPUT);
   
+  dht.begin();
+  
   Serial.println("# Warm up...");
   
-  out += "# GPdust, TPaq, PPDdust";
+  out += "# GPdust, TPaq, PPDdust, humidity, temp";
   
   Serial.println(out);
     time0 = micros();
@@ -56,6 +65,10 @@ void loop() {
   digitalWrite(GP2LedPin, HIGH); // turn the LED off
   delayMicroseconds(GPoffTime);
   
+  // DHT22 (AM2302) temperature & humidity sensor
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();  
+  
   // TP401A air quality sensor
   TP4sum += analogRead(TP4pin);
 
@@ -69,6 +82,10 @@ void loop() {
      out += String(TP4sum/i);
      out += ",";
      out += String(100*PPDsum/(float)PPDsample);
+     out += ",";
+     out += String(h);
+     out += ",";
+     out += String(t);
      
      Serial.println(out); 
      

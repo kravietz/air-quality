@@ -58,8 +58,8 @@ while(True):
             continue
 
         try:
-            gp,tp,pp = line.split(',')
-            gp,tp,pp = list(map(float, (gp,tp,pp)))
+            gp,tp,pp,rh,tc = line.split(',')
+            gp,tp,pp,rh,tc = list(map(float, (gp,tp,pp)))
         except ValueError:
             print("Invalid line", line)
             continue
@@ -70,20 +70,24 @@ while(True):
 
         pp_tsp = (1.1*pow(pp, 3) - 3.8*pow(pp, 2) + (520*pp) + 0.62)*0.033
 
-        print(u"{8} Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7}".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, pp, pp_tsp, tp, now))
+        rh_proc = rh*100;
+
+        print(u"{8} Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7} *** DHT22 {9}% {10}°C".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, pp, pp_tsp, tp, now, rh_proc, tc))
         # add current results to queue
-        q.append((now, gp, pp, tp))
-        cw.writerow([now, gp, pp, tp])
+        q.append((now, gp, pp, tp, rh_proc, tc))
+        cw.writerow([now, gp, pp, tp, rh_proc, tc])
 
         fout.flush()
         os.fsync(fout.fileno())
 
         try:
-            for n,g,p,t in q:
+            for n,g,p,t,h,c in q:
                 feed.datastreams = [
                     xively.Datastream(id='GP2Y10_dust',  current_value=g, at=n),
                     xively.Datastream(id='PPD42NS_dust', current_value=p, at=n),
                     xively.Datastream(id='TP401A_gas',   current_value=t, at=n),
+                    xively.Datastream(id='DHT22_humid',  current_value=h, at=n),
+                    xively.Datastream(id='DHT22_temp',   current_value=c, at=n),
                 ]
                 feed.update()
             q = []
