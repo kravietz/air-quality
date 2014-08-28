@@ -15,5 +15,12 @@ Arduino Uno reading four sensors through [Grove Base Shield](http://www.seeedstu
 * Shinyei [PPD42NS](http://sca-shinyei.com/pdf/PPD42NS.pdf) - dust sensor; Arduino outputs percentage of low signal in sampling period (30 seconds) which is a non-linear function of dust concentration; again, **the less the better**, and zero dust means zero percentage;
 * Dovelet [TP401A](http://seeedstudio.com/wiki/images/e/eb/TP-401A_Indoor_Air_quality_gas_sensor.pdf) - hazardous gases sensor; Arduino outputs analog port values (0-1024), which are proportional to sensor's resistance, which is inversely proportional to hazardous gases concentration; again, **the less the better**, but as this sensor is basically a resistor, expect some output all the time even when there's no gases;
 * [DHT22](http://proto-pic.co.uk/content/datasheets/DHT22-sensor-datasheet.pdf) - temperature and humidity sensor; outputs direcly  percentage of [relative humidity](https://en.wikipedia.org/wiki/Relative_humidity) and temperature in °C
+
+## Photos
+
+![inside view of the sensor](https://farm6.staticflickr.com/5575/14879385900_4055873314_z_d.jpg Inside view of the air quality sensor)
+
+![sensor installed](https://farm6.staticflickr.com/5571/15066035225_46bc7c7fc9_z_d.jpg Air quality sensor installed under roof)
+
  
 
