@@ -58,8 +58,8 @@ while(True):
             continue
 
         try:
-            gp,tp,pp,rh,tc = line.split(',')
-            gp,tp,pp,rh,tc = list(map(float, (gp,tp,pp)))
+            readings = line.split(',')
+            gp,tp,pp,rh,tc = list(map(float, readings))
         except ValueError:
             print("Invalid line", line)
             continue
@@ -70,12 +70,10 @@ while(True):
 
         pp_tsp = (1.1*pow(pp, 3) - 3.8*pow(pp, 2) + (520*pp) + 0.62)*0.033
 
-        rh_proc = rh*100;
-
-        print(u"{8} Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7} *** DHT22 {9}% {10}°C".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, pp, pp_tsp, tp, now, rh_proc, tc))
+        print(u"{8} Raw: {0} *** GP2Y10={1} {2}V {3}µg/m3 {4}µg/m3 *** PPD42NS={5} {6}µg/m3 *** TP401A={7} *** DHT22 {9}% {10}°C".format(line, gp, gp_voltage, gp_tsp, gp_tsp2, pp, pp_tsp, tp, now, rh, tc))
         # add current results to queue
-        q.append((now, gp, pp, tp, rh_proc, tc))
-        cw.writerow([now, gp, pp, tp, rh_proc, tc])
+        q.append((now, gp, pp, tp, rh, tc))
+        cw.writerow([now, gp, pp, tp, rh, tc])
 
         fout.flush()
         os.fsync(fout.fileno())
