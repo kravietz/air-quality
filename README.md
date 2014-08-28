@@ -18,9 +18,9 @@ Arduino Uno reading four sensors through [Grove Base Shield](http://www.seeedstu
 
 ## Photos
 
-![inside view of the sensor](https://farm6.staticflickr.com/5575/14879385900_4055873314_z_d.jpg Inside view of the air quality sensor)
+![inside view of the sensor](https://raw.githubusercontent.com/kravietz/air-quality/master/docs/pics/IMG_20140828_201244.jpg Inside view of the air quality sensor)
 
-![sensor installed](https://farm6.staticflickr.com/5571/15066035225_46bc7c7fc9_z_d.jpg Air quality sensor installed under roof)
+![sensor installed](https://raw.githubusercontent.com/kravietz/air-quality/master/docs/pics/IMG_20140828_175742.jpg Air quality sensor installed under roof)
 
  
 
